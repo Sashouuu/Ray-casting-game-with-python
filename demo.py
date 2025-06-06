@@ -63,7 +63,7 @@ while True:
     plt.pause(0.0001)
     plt.clf()
 
-    key = keyboard.read_key()
+    key = keyboard.read_key() # player movement
     x, y = posx, posy
     if key == "up":
         x, y = x + 0.3 * np.cos(rot), y + 0.3 * np.sin(rot)
