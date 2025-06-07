@@ -68,7 +68,7 @@ while True:
     plt.pause(0.0001)  # between seperate plots there should be a short pause
     plt.clf()  # clear old plot data
 
-    key = keyboard.read_key()
+    key = keyboard.read_key() # player movement
     x, y = posx, posy
 
     if key == "up":
