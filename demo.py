@@ -10,7 +10,7 @@ for i in range(size - 2):
             mapa[i+1][j+1] = 0
 
 posx, posy = (1, np.random.randint(1, size - 1))
-rot = np.pi / 4
+rot = np.pi / 4  # initial rotation, indicating where player is looking at
 
 x, y = posx, posy
 mapa[x][y] = 0
@@ -39,8 +39,8 @@ while True:
     plt.hlines(0.6, 0, 60, colors="lightblue", lw=165, alpha=0.5)
     tilex, tiley, tilec = ([], [], [])
 
-    for i in range(60):
-        rot_i = rot + np.deg2rad(i - 30)
+    for i in range(60): #FOV = 60 degrees
+        rot_i = rot + np.deg2rad(i - 30)  #varying viewing angle
         x, y = posx, posy
         sin, cos = 0.02 * np.sin(rot_i), 0.02 * np.cos(rot_i)
         n = 0
@@ -60,10 +60,13 @@ while True:
                 h = np.clip(1 / (0.02 * n), 0, 1)
                 c = np.asarray(mapa[int(x)][int(y)]) * (0.3 + 0.7 * h ** 2)
                 break
-        plt.vlines(i, -h, h, lw=8, colors=c)
-
-    plt.axis("off"); plt.tight_layout(); plt.axis([0, 60, -1, 1])
-    plt.draw(); plt.pause(0.0001); plt.clf()
+        plt.vlines(i, -h, h, lw=8, colors=c)  # lw=8 - increases lines thickness
+    plt.axis("off")  # hides axis
+    plt.tight_layout()  # remove blank spaces
+    plt.axis([0, 60, -1, 1])  # limit plot region
+    plt.draw()
+    plt.pause(0.0001)  # between seperate plots there should be a short pause
+    plt.clf()  # clear old plot data
 
     key = keyboard.read_key()
     x, y = posx, posy
@@ -83,4 +86,5 @@ while True:
         if int(posx) == exitx and int(posy) == exity:
             break
         posx, posy = x, y
-plt.close()
+
+plt.close() # automatically close window when exiting game
