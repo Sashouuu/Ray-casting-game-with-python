@@ -15,19 +15,24 @@ def main():
     halfvres = 100  # vertical resolution / 2
     mod = hres / 60  # scaling factor (60 degrees fov)
 
+    size = 15
     posx, posy, rot = 0, 0, 0
-    frame = np.random.uniform(0, 1, (hres, halfvres * 2, 3))
 
+    mapa = np.random.choice([0, 0, 0, 1], (size, size))
+    mapc = np.random.uniform(0, 1, (size, size, 3))
+
+    frame = np.random.uniform(0, 1, (hres, halfvres * 2, 3))
     sky = pg.image.load("sky.jpg")
     sky = pg.surfarray.array3d(pg.transform.scale(sky, (360, halfvres * 2)))
     ground = pg.surfarray.array3d(pg.image.load("floor.jpg"))
+    wall = pg.surfarray.array3d(pg.image.load("floor.jpg")) / 255
 
     while is_running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 is_running = False  # if the close button is pressed the game stops
 
-        new_frame(posx, posy, rot, frame, sky, ground, hres, halfvres, mod)
+        frame = new_frame(posx, posy, rot, frame, sky, ground, hres, halfvres, mod, mapa, size, wall, mapc)
 
         # transforming frame into a surface so it can be displayed
         surf = pg.surfarray.make_surface(frame * 255)
@@ -39,7 +44,6 @@ def main():
         pg.display.update()
 
         posx, posy, rot = movement(posx, posy, rot, pg.key.get_pressed(), clock.tick())
-
 
 
 if __name__ == "__main__":
